@@ -1,5 +1,10 @@
 #!/usr/bin/python
+
+# nick theone, 2018
 # code is designed for testing dhcp behaviour
+# this script generates dhcp discover package
+# and sends it to some port, now u can set
+# things up on the router to chech the behaviour
 
 #import sys
 from scapy.all import *
