@@ -1,6 +1,9 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
+
+# nick theone 2018
+# 
 # code designed for testing maximum amount of ip interfaces
+
 import telnetlib
 
 targetIp = '10.10.10.101'
@@ -23,8 +26,10 @@ telnet.read_until(':')
 print "Read..."
 
 def Write(str1, str2 = '#'):
+	
 	telnet.write(str1 + '\r')
 	telnet.read_until(str2)
+	
 	return
 
 Write('admin', ':')
