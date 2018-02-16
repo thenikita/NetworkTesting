@@ -12,7 +12,9 @@
 from scapy.all import *
 import telnetlib
 
-targetIp = '10.10.10.101'
+targetIp = '10.10.10.101'		# ip for telnet connection
+serverVlanIp = '10.10.11.102'
+serverPort = ''
 psw = ''
 usr = ''
 telnet = telnetlib.Telnet(targetIp, 23)
@@ -72,6 +74,31 @@ def VlanSetup():
 	Write('vlan 101')
 	Write('interface vlan 101')
 	Write('ip address %s /24' % targetIp)
+	Write('exit')
+
+	Write('vlan 102')
+	Write('interface vlan 102')
+	Write('ip address %s /24' % serverVlanIp)
+
+
+def PortSetup():
+
+	Write('end')
+
+	port = raw_input('Enter port for cliens[1]: ')
+	Write('interface ethernet %s' % port)
+	Write('switchport trunk native vlan 101')
+	Write('exit')
+
+	port = raw_input('Enter port for cliens[2]: ')
+	Write('interface ethernet %s' % port)
+	Write('switchport trunk native vlan 101')
+	Write('exit')
+
+	serverPort = raw_input('Enter port for server: ')
+	Write('interface ethernet %s' % serverPort)
+	Write('switchport trunk native vlan 102')
+	Write('exit')
 
 
 # function sets uo basic things for dhcp
@@ -86,7 +113,7 @@ def DhcpSetup():
 
 	try:
 
-		print "Generatin IP pool..."
+		print "Generating IP pool..."
 		Write(
 			'ip dhcp pool network Generated ' + 
 			ip + '0 '+
@@ -144,17 +171,20 @@ def DhcpSetup():
 		Write('end')
 		Write('configure')
 		
-		port = raw_input('The number of router port wheres DHCP server: ')
+		# setting server port as trusted BUG HERE
 		Write(
 			'interface ethernet %s' %
-			port) 
+			serverPort) 
 		Write('ip dhcp snooping trust')
 
 		Write('exit')
+
+		# setting server ip
 		serverIp = raw_input('Enter the DHCP servers IP: ')
 		Write(
 			'ip dhcp relay address %s' % 
 			serverIp)
+
 		Write('ip dhcp relay enable')
 		Write('ip dhcp information option')
 
@@ -163,9 +193,9 @@ def main():
 
 	try:
 
-		Connect(telnet)
+		Connect(telnet)		# connecting as usr:psw
 		time.sleep(5)		#wait for load
-		ResetSettings()
+		ResetSettings()		# preparing settings for test
 	
 	except Exception as e:
 		
@@ -178,6 +208,9 @@ def main():
 
 	try:
 	
+		VlanSetup()			# prefaring vlans
+		PortSetup()			# preparint ports
+		
 		print "DHCP setup started..."
 		DhcpSetup()
 

@@ -32,7 +32,7 @@ def MakePacket(srcMac, dstMac):
 		xid = 0x01020304, 
 		flags = 1)
 
-	if int(raw_input('Use opt82? (1/0)')) == 1:
+	if int(raw_input('Use opt82?(1/0) ')) == 1:
 
 		print "Using 82!"
 		option82 = "\x01\x01\x05\x02\x06\x11\x22\x34\x44\x55\x66"
@@ -57,7 +57,7 @@ def main():
 	print "Testing DHCP"
 
 	routerIp = '10.10.10.101' 				# default router ip
-	trustedsourceMac = raw_input('Enter trusted mac: ')
+	#trustedsourceMac = raw_input('Enter trusted mac: ')
 	defaultMac = '00:11:22:33:44:55'		# source mac of dhcp packets
 											# if testing request packs should
 											# be a) as trusted in router
@@ -66,19 +66,10 @@ def main():
 
 	interface = raw_input('Enter the port: ')
 
-	trustedPack = MakePacket(trustedsourceMac, destMac)
+	#trustedPack = MakePacket(trustedsourceMac, destMac)
 	untrustedPack = MakePacket(defaultMac, destMac)
 
 	print "Packets ready"
-
-	i = 0
-	print "Sending trusted Pack: "
-	while i < 6:
-
-		print i
-		i += 1
-		sendp(trustedPack, iface = interface, verbose = False)
-		time.sleep(10)					#sleep in seconds!
 
 	i = 0
 	print "Sending untrusted Pack: "
