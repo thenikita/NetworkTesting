@@ -1,5 +1,5 @@
 # OSPF
-[Original RFC 1247](ttps://tools.ietf.org/html/rfc1247#section-3.5)
+[Original RFC 1247](https://tools.ietf.org/html/rfc1247#section-3.5)
 For now document doesn't look so much systemized but in future edits this trouble should be fixed. Any requests are appreciated. Also, feel free to **contact me** if you found any bad info, typos etc. 
 
 ## Short Summary
