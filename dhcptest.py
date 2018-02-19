@@ -27,7 +27,7 @@ def MakePacket(srcMac, dstMac):
 		dport = 67)
 
 	boot = BOOTP(
-		chaddr = dstMac, 
+		chaddr = srcMac, 
 		ciaddr = '0.0.0.0', 
 		xid = 0x01020304, 
 		flags = 1)
@@ -62,7 +62,7 @@ def main():
 											# if testing request packs should
 											# be a) as trusted in router
 											# settings b) as untrusted
-	destMac = 'ff:ff:ff:ff:ff:ff'
+	destMac = '01:11:22:33:44:55'
 
 	interface = raw_input('Enter the port: ')
 
