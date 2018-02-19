@@ -150,6 +150,8 @@ Events causing state changes:
 * **Inactivity timer**
 * **LLDown**
 
+Detailed event behaviour can find in referred RFC on p.61-66 
+
 ## Packet Processing
 **Sending**
 
