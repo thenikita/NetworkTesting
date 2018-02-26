@@ -10,7 +10,7 @@ OSPF is a link-state based routing protocol.  It is designed to be run internal 
 * *link/ interface*
 * *metric*
 * *cost*
-* *autonomus system, AS*
+* *autonomus system, AS* -- a group of routers exchanging via a common routing protocol.
 
 **OSPF: basic:**
 * *router ID, RID*
@@ -51,10 +51,10 @@ Each area has its own SPF algorithm, so own topological DB and graph. This topol
 The bb consists of networks not contained in any area, their routers and routers that belongs to multiple areas. Some areas can be uncontigious with backbones physically, so there's need to make logical connection (virtual link). BB is responsible for distributing routing information between areas. BB's topology is invisible for all areas, but BB can see all the topologies.
 
 ### Routers' Classification
-* *Internal*
-* *Area border*
-* *Backbone*
-* *AS boundary*
+* *Internal* -- router inside the area, only backbone iface routers.
+* *Area border* -- router attached to multiple areas.
+* *Backbone* -- router with an iface to the backbone. Includes all multi-area routers.
+* *AS boundary* -- exchanges routing info with routers from other autonomous systems.
 
 ### IP Subnetting Support
 Takes place but seems nothing interesting now.
@@ -150,7 +150,13 @@ Events causing state changes:
 * **Inactivity timer**
 * **LLDown**
 
-Detailed event behaviour can find in referred RFC on p.61-66 
+Detailed event behaviour can find in referred RFC on p.61-66
+
+## Whether to become adjacement
+An adjacement shouldbe established when:
+* The underlying network is p2p
+* The underlying network is virtual link
+* The router itself or the neigbour is DR or BDR
 
 ## Packet Processing
 **Sending**
@@ -182,6 +188,77 @@ Ti be accepted at IP level packet should have:
 * auth type must match to area's AT
 
 If everything OK, the pack will be accepted. Now it must be authenticated. Auth procedure may use auth key which pre-configured for area. If there's Hello packet it will be processed by the hello protocol.
+
+## Routing table structure
+There's a single table in eash router. The fields of the table are:
+* *Destination type*:
+	* Network
+	* Area border router
+	* AS boundary router
+* Destination ID
+* Address mask
+* Optional capabilities
+* TOS
+* Area
+* Path type
+* Cost
+* Type 2 cost
+* Link state Origin
+* Next hop
+* Advertising router
+
+## Routing table lookup
+1. Select the set of matching entries.
+2. Check if destination IP's in configured area address range.
+3. Reduce set of entries by selecting more suitable path-type.
+4. Select most specific (concrete) match from the entries.
+5. Select entries which TOS matches to it from the packet.
+
+## Events causing LSA origination
+* The LS refresh timer firing.
+
+If the content of advertisement is different:
+* Interface's state changing
+* DR changing
+* Neighbour state changing to/from FULL
+
+For area border routers only:
+* An intra-route changing
+* An inter-route changing
+* New router attaching
+
+For AS boundary routers only:
+* External route gained with an external routing protocol.
+
+## Building the list of link recoreds
+Relevant Link IDs see in the RFC p.93-94
+* If the attached network doesn't belong to area A, no links are added to advertisement, and the next interface should be examined.
+* Else if the state of the interface is down no links are added.
+* Else if the state of the iface is p2p, add links according to:
+	* If the neighbouring router is fully adjacent, add type 1 (p2p) link or type 4 (virtual link) if this is rigth interface.
+	* If this is not listed above, add type 3 (stub net) link.
+* Else if the state is loopback, add type 3 link.
+* Else if waiting, add type 3 link.
+* If the router is fully adjacent to the DR or DR itself, add type 2 link. else, add link as if interface state were waiting.
+
+## Link types
+* Router
+* Network
+* Summary
+* AS external links
+
+## Flooding
+
+## Aging LSDB
+
+## Virtual links
+
+## Calculation of the Routing Table
+* The present RT is invalidating
+* The intra-area routes are calculating
+* The inter-area routes are calculating
+* For virtual link entries next hop is calcilating
+* Routes to external destinations are calculating
 
 ## Linked Scripts
 None of them now.
