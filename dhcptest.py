@@ -62,7 +62,7 @@ def main():
 											# if testing request packs should
 											# be a) as trusted in router
 											# settings b) as untrusted
-	destMac = '01:11:22:33:44:55'
+	destMac = '00:11:22:33:44:50'
 
 	interface = raw_input('Enter the port: ')
 
@@ -72,12 +72,12 @@ def main():
 	print "Packets ready"
 
 	i = 0
-	print "Sending untrusted Pack: "
-	while i < 6:
+	#print "Sending untrusted Pack: "
+	while i < 60:
 
 		print i
 		i += 1
 		sendp(untrustedPack, iface = interface, verbose = False)
-		time.sleep(10)
+		time.sleep(3)
 
 main()
