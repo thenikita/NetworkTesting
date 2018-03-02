@@ -81,7 +81,7 @@ Multiple-ring system takes place if these principles are adhered to:
 * **DNF**
 * **E-LAN**
 * **EPL**
-* **ERP**
+* **ERP** --ethernet ring protection
 * **ETH** -- ethernet layer network
 * **ETHDi**
 * **ETY**
@@ -134,8 +134,3 @@ In revertive operation traffic channel restored to the RPL while error condition
 * SF is declared on one of the ring links and the detected SF condition currently has the highest priority
 * the received R-APS message requests to switch and it has the highest priority
 * initiated by operator control and has the highest priority
-
-###Protection Switching Models on a Single Ethernet Link
-Scheme pictures in teh doc.
-
-### Traffic Channel Blocking

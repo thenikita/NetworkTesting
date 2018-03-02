@@ -208,6 +208,7 @@ There's a single table in eash router. The fields of the table are:
 * Advertising router
 
 ## Routing table lookup
+
 1. Select the set of matching entries.
 2. Check if destination IP's in configured area address range.
 3. Reduce set of entries by selecting more suitable path-type.
@@ -262,3 +263,9 @@ Relevant Link IDs see in the RFC p.93-94
 
 ## Linked Scripts
 None of them now.
+
+# Testing
+## Using commands
+
+ifconfig eth1 192.168.0.1 /24
+route add -net 10.10.10.0 netmask 255.255.255.0 gateway 192.168.0.1

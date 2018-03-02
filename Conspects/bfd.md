@@ -75,6 +75,7 @@ A session can be kept down by using AdminDown state.
 **Diagnostic codes**
 
 Value | Code name
+
 	0. No diagnostic
 	1. Control detection time expired
 	2. Echo function failed
@@ -90,6 +91,7 @@ Value | Code name
 **Auth types**
 
 Value | Code name
+
 	0. Reserved
 	1. Simple password
 	2. Keyed MD5
