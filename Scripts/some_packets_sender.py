@@ -27,7 +27,10 @@ ip = IP(
 		src = scrIp,
 		dst = dstIp)
 
-pack = eth/ip
+dot1q = Dot1Q(
+		prio = 7)
+
+pack = eth/ip/dot1q
 
 while True:
 	
