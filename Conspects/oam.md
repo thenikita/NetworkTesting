@@ -38,7 +38,7 @@ Maintenance point is a demarcation point on an interface that participates in CF
 
 
 ### CFM Messages
-CFMM are standard ETher frames. Routers can support only limited CFM functions. Bridges that cannot interpret CFM messages forfard them as normal frames.
+CFMM are standard ETher frames. Routers can support only limited CFM functions. Bridges that cannot interpret CFM messages forfard them as normal frames. **CFMs encapsulate in 802.1Q tag.**
 
 Tree types of messages:
 * Continuity check (possible errors below)
@@ -47,8 +47,8 @@ Tree types of messages:
 	* *Cross connect*
 	* *Config error*
 	* *Forwarding loop*
-* Loopback
-* Traceroute
+* Loopback: Reply, Messaqge
+* Traceroute: R, M
 
-
-### CFM Interaction of Different Networks with ML-MR-10 Card
+## CFM Config guidlines
+full ones at Cisco's Article p. 34-14
