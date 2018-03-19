@@ -37,23 +37,31 @@ eth = Ether(
 
 ip = IP(
 		src = scrIp,
-		dst = dstIp,
-		tos = 184)
+		dst = dstIp)
 
 ''' optional '''
 dotq = Dot1Q(
-		prio = 5,
+		prio = 7,
 		vlan = 101)
 ''' optional '''
 
-pack = eth/dotq/ip/UDP()
+pack = eth/dotq/ip/ICMP()
+
+dotq = Dot1Q(
+		prio = 2,
+		vlan = 101)
+
+pack2 = eth/dotq/ip/ICMP()
 
 pack.display()
+pack2.display()
+
+i = 0;
 
 while True:
 	
+	i += 1;
 	sendp(pack, iface = face, verbose = False)
-	print "Sent!"
+	sendp(pack2, iface = face, verbose = False)
+	print "sent"
 	time.sleep(3)
-
-'''https://habrahabr.ru/post/326032/'''

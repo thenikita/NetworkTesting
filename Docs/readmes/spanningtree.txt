@@ -1,0 +1,46 @@
+Program for testing STP includes modes to test through:
+Normal:
+
+	Generic testing just for some BPDU packets existance. Shows all tree roots currently active for the node you are. 
+
+	#
+	# Add rx-tcn
+	# Add tx-bpdu
+	#
+
+
+Two switches: NOW ON DEVELOPEMENT
+
+	Testing which trace changes when one of the switches become new root.
+
+	#
+	# Add rootguard
+	# Add colibration of priority with changing prio and cost
+	#
+
+	1. Set some setting on both switches the way one of them will be the root. // This part is going via telnet, partly need admin's attention.
+
+	2. Collect packets from the sources. Remembers current state of the system.
+
+	3. Changes switches symmetrically.
+
+	4. Collect packets and compare saved and new states.
+
+Guard: NOW EVEN NOT ON DEVELOPEMENT
+
+	This mode is thought to test bpdu-guard feature on switch's ports.
+
+	#
+	# Add something with bpdu filter and guard
+	#
+
+	1. Setting up the interfaces on the switch.
+
+	1.2. Remembering the state.
+
+	2. Spamming bpdus.
+
+	3. Comparing current state with saved.
+
+--------------
+In future add things with path costs.
