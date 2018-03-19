@@ -21,22 +21,6 @@ _modes = [ "normal",
 
 _testmode = ""
 
-_freeports = [ "eth1",
-               "eth2",
-               "eth3",
-               "eth4",
-               "eth5",
-               "eth6",
-               "eth7",
-               "eth8",
-               "eth9",
-               "eth10",
-               "eth11",
-               "eth12",
-               "eth13",
-               "eth14",
-               "eth15"]
-
 
 def SniffForBPDU():
 
@@ -125,6 +109,16 @@ def FindExistedRoot(rootlist, target):
 
 
 def CreateSniffReport():
+
+    # TODO implement sniff reporting function
+
+    pass
+
+
+def CalculateWheresRoot(costs, prios):
+
+    # TODO implement root calculation function
+
     pass
 
 
@@ -142,17 +136,44 @@ def mainTwoSwitches():
     switchOne = TelnetController()
     switchTwo = TelnetController()
 
-    portsOne = _freeports
-    portsTwo = _freeports
+    portsOne = [1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15]
+
+    portsTwo = [1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15]
 
     ConnectControllers(switchOne, switchTwo)
 
     portsOne.remove(switchOne.GetSwitchPort())
     portsTwo.remove(switchTwo.GetSwitchPort())
 
-    # TODO fix removing ports above
-
-    DefineAvailablePorts(portsOne, portsTwo)
+    RemoveAdditionalPorts(portsOne, portsTwo)
 
 
 def ConnectControllers(switchOne, switchTwo):
@@ -174,7 +195,7 @@ def ConnectControllers(switchOne, switchTwo):
         print(exc)
 
 
-def DefineAvailablePorts(portsOne, portsTwo):
+def RemoveAdditionalPorts(portsOne, portsTwo):
 
     need = raw_input("Need to delete additional ports? (y/N)")
 

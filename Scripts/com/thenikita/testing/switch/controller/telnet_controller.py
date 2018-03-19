@@ -4,6 +4,7 @@
 # actions on some switch via telnet
 
 import telnetlib
+from random import randint
 
 
 class TelnetController:
@@ -16,6 +17,8 @@ class TelnetController:
     adminPort = "eth1"              # port with link to the switch
 
     switchPort = "eth1"
+
+    costs = []
 
     def __init__(self):
 
@@ -80,7 +83,7 @@ class TelnetController:
 # All setups are going from root menu mode
 
 
-    def SetupStp(self, priority):
+    def SetupStp(self, priority, ports):
 
         self.Write("configure")
 
@@ -88,8 +91,23 @@ class TelnetController:
 
         self.Write("spanning-tree priority %s" % priority)
 
+        self.SetupStpPortCosts(ports)
 
-    def GetSwitchPort(self):         return self.switchPort
+
+    def SetupStpPortCosts(self, ports):
+
+        for i in ports:
+
+            cost = randint(0, 200000000)
+            self.costs.append(cost)
+
+            self.Write("interface ethernet %i" % i)
+            self.Write("spanning-tree cost %i" % cost)
+
+        print(self.costs)
+
+
+    def GetSwitchPort(self):         return int(self.switchPort[3])
 
     def GetSwitchIp(self):           return self.switchIp
 
@@ -124,5 +142,6 @@ class TelnetController:
 
 if __name__ == '__main__':
 
-    controller = TelnetController()
-    controller.Write("show version")
+    tnController = TelnetController()
+
+    tnController.SetupStpPortCosts([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
