@@ -4,7 +4,7 @@
 import keyboard as keyboard
 from scapy.all import *
 from scapy.layers.inet import *
-from com.thenikita.testing.switch.controller.telnetcontroller import *
+from com.thenikita.testing.switch.controller.telnet_controller import *
 
 TIMEOUT = 1
 SRC_MAC = "00:00:bb:00:00:02"
@@ -14,14 +14,14 @@ _rootlist = []
 _countlist = []
 _packlist = []
 
-_modes = ["normal",
+_modes = [ "normal",
            "twoswitches",
            "guard",
            "all"]
 
 _testmode = ""
 
-_freeports = ["eth1",
+_freeports = [ "eth1",
                "eth2",
                "eth3",
                "eth4",
@@ -139,25 +139,50 @@ def mainNormal():
 
 def mainTwoSwitches():
 
-    ConnectControllers()
+    switchOne = TelnetController()
+    switchTwo = TelnetController()
 
-    pass
+    portsOne = _freeports
+    portsTwo = _freeports
+
+    ConnectControllers(switchOne, switchTwo)
+
+    portsOne.remove(switchOne.GetSwitchPort())
+    portsTwo.remove(switchTwo.GetSwitchPort())
+
+    # TODO fix removing ports above
+
+    DefineAvailablePorts(portsOne, portsTwo)
 
 
-def ConnectControllers():
+def ConnectControllers(switchOne, switchTwo):
 
     print("Connecting to switches")
 
     try:
 
-        switchOne = TelnetController()
-        sitchTwo = TelnetController()
+        switchOne.InitController()
+        switchTwo.InitController()
+
+        switchOne.ShowController()
+        switchTwo.ShowController()
 
         print("Connected")
 
     except Exception as exc:
 
         print(exc)
+
+
+def DefineAvailablePorts(portsOne, portsTwo):
+
+    need = raw_input("Need to delete additional ports? (y/N)")
+
+    if need == "y":
+
+        pass
+
+    # TODO add removing ports from available
 
 
 def mainGuard():
